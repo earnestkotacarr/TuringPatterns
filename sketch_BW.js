@@ -55,26 +55,28 @@ if (Math.floor(millis() / 1200) % 2 === 1) {
          }
     }
 
-
 loadPixels();
-    for (var x = 0; x < width; x++) {
-        for (var y = 0; y < height; y++) {
-            var pix = (x + y * width) * 4;
-            var a = next[x][y].a;
-            var b = next[x][y].b;
+for (var x = 0; x < width; x++) {
+    for (var y = 0; y < height; y++) {
+        var pix = (x + y * width) * 4;
+        var a = next[x][y].a;
+        var b = next[x][y].b;
+        
+        var grayscaleValue = floor(a * 255);  // Convert 'a' to grayscale
 
-            // Invert colors if invertColors is true
-            if (invertColors) {
-                a = 1 - a;
-                b = 1 - b;
-            }
-
-            pixels[pix + 0] = floor(a * 255);
-            pixels[pix + 1] = floor(b * 255);
-            pixels[pix + 2] = floor((a - b) * 255);
-            pixels[pix + 3] = 255;
+        // Invert colors if invertColors is true
+        if (invertColors) {
+            grayscaleValue = 255 - grayscaleValue;  // Invert grayscale
         }
-    }  
+
+        pixels[pix + 0] = grayscaleValue; // Red
+        pixels[pix + 1] = grayscaleValue; // Green
+        pixels[pix + 2] = grayscaleValue; // Blue
+        pixels[pix + 3] = 255; // Alpha
+    }
+}
+updatePixels();
+
   
   
 updatePixels();
